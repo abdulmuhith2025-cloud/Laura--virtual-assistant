@@ -1,1 +1,47 @@
+name: Build Laura APK
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ambil kode aplikasi
+        uses: actions/checkout@v4
+      - name: Siapkan Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Siapkan Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+      - name: Pasang dependensi
+        run: npm install
+      - name: Siapkan file web dan ikon Laura
+        run: |
+          node -e "const fs=require('fs'); const p=JSON.parse(fs.readFileSync('capacitor.config.json','utf8')); p.webDir='.'; fs.writeFileSync('capacitor.config.json', JSON.stringify(p,null,2)+'\n');"
+          mkdir -p assets
+          cp icon-only.png assets/icon-only.png
+      - name: Tambahkan platform Android
+        run: npx cap add android
+      - name: Buat ikon Android
+        run: npx capacitor-assets generate --android
+      - name: Sinkronkan proyek Android
+        run: npx cap sync android
+      - name: Build APK debug
+        run: cd android && chmod +x gradlew && ./gradlew assembleDebug
+      - name: Simpan APK untuk diunduh
+        uses: actions/upload-artifact@v4
+        with:
+          name: Laura-APK
+          path: android/app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: error
 
