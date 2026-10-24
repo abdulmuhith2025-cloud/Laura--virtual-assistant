@@ -36,6 +36,12 @@ jobs:
           cp icon-only.png www/icons/icon-maskable-512.png
       - name: Tambahkan platform Android
         run: npx cap add android
+      - name: Aktifkan izin notifikasi dan alarm
+        run: |
+          M=android/app/src/main/AndroidManifest.xml
+          for P in POST_NOTIFICATIONS USE_EXACT_ALARM SCHEDULE_EXACT_ALARM RECEIVE_BOOT_COMPLETED; do
+            grep -q "android.permission.$P" $M || sed -i "s#</manifest>#<uses-permission android:name=\"android.permission.$P\"/></manifest>#" $M
+          done
       - name: Buat ikon Android
         run: npx capacitor-assets generate --android
       - name: Sinkronkan proyek Android
