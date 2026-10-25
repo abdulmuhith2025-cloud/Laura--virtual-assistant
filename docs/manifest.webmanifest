@@ -1,6 +1,6 @@
 {
- "name": "Laura Virtual Assistant",
- "short_name": "Laura",
+ "name": "Laura-Personal Assistance",
+ "short_name": "Laura-Personal Assistance",
  "start_url": "./index.html",
  "scope": "./",
  "display": "standalone",

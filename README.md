@@ -1,31 +1,37 @@
-# Laura Virtual Assistant: paket PWA dan APK
+# Laura-Personal Assistance: paket PWA dan APK (versi 1.1)
 
-Isi paket: `docs/` (aplikasi web + PWA), `assets/icon-only.png` (ikon Laura), `.github/workflows/android.yml` (pembuat APK otomatis, gratis), `capacitor.config.json`, `package.json`.
+## Memperbarui dari versi sebelumnya
+1. Di repositori GitHub Anda, unggah ulang seluruh isi folder ini dan **timpa** file lama (folder `docs`, `resources`, `.github`, `package.json`, `capacitor.config.json`).
+2. Tab Actions, **Build Laura APK**, Run workflow. Tunggu centang hijau, lalu unduh **Laura-APK**.
+3. **Copot dulu aplikasi Laura lama** di HP (tanda tangan APK berbeda tiap build, jadi tidak bisa menimpa). Data lokal di aplikasi lama ikut terhapus. Setelah itu pasang APK baru.
+4. PWA: otomatis ikut terbarui setelah GitHub Pages selesai deploy. Jika tampilan lama masih muncul, tutup aplikasi lalu buka lagi.
+
+## Mengaktifkan chat AI Laura (gratis)
+1. Buka https://aistudio.google.com/apikey, masuk dengan akun Google, lalu **Create API key**.
+2. Di Laura, buka panel Laura, **Pengaturan suara**, lalu tempel di kolom **API key Gemini**.
+3. Jika Google meminta pengaktifan billing atau paket prabayar untuk akun baru, itu ketentuan Google. Tanpa itu pun jadwal, pengingat, dan salat tetap berfungsi.
+4. Paket gratis Google memiliki batas permintaan per menit dan per hari. Pada paket gratis, isi percakapan dapat dipakai Google untuk memperbaiki produknya, jadi jangan mengirim data sensitif.
+5. Alternatif: **API key Anthropic** (berbayar per pemakaian).
+
+## Mikrofon dan suara
+- **APK:** Laura memakai layanan suara Android (jendela Google "Silakan bicara"). Izinkan **Mikrofon** saat diminta. Perlu aplikasi Google dan internet aktif.
+- **PWA di Chrome:** izinkan mikrofon untuk situs (ikon gembok, Izin). Jika muncul pesan galat, pesannya menyebut penyebabnya.
+- Tombol **Mic: ID/EN** mengganti bahasa yang dikenali.
+- Suara Laura memakai suara teks-ke-ucapan HP. Jika tidak ada suara Indonesia atau Inggris (UK), pasang lewat Pengaturan HP, Bahasa, Output teks-ke-ucapan, Layanan suara Google, lalu unduh data suaranya. Pilihan suara ada di Pengaturan suara.
+
+## Nama dan ikon
+- Nama aplikasi: **Laura-Personal Assistance**. Ikon launcher dan ikon PWA memakai avatar Laura. Nama di layar utama mungkin dipotong oleh Android.
 
 ## Jalur A: PWA (Android dan Windows)
-1. Buat akun GitHub, lalu repositori baru berstatus **Public** (misalnya `laura-assistant`). GitHub Pages gratis hanya untuk repositori public.
-2. Unggah seluruh isi folder ini (Add file, Upload files). Pastikan folder `.github` ikut terunggah. Jika tidak terlihat di komputer, aktifkan "tampilkan file tersembunyi", atau buat manual lewat Add file, Create new file dengan nama `.github/workflows/android.yml` lalu tempel isinya.
-3. Settings, Pages, Source: Deploy from a branch, Branch `main`, folder `/docs`, Save.
-4. Tunggu 1 sampai 2 menit. Alamatnya `https://NAMA-GITHUB-ANDA.github.io/laura-assistant/`.
-5. Android (Chrome): menu tiga titik, Instal aplikasi. Windows (Edge): menu tiga titik, Apps, Install this site as an app.
+Repositori **Public**, lalu Settings, Pages, Source: Deploy from a branch, Branch `main`, folder `/docs`. Alamatnya `https://NAMA-GITHUB-ANDA.github.io/NAMA-REPO/`. Pasang: Chrome Android (menu, Instal aplikasi) atau Edge Windows (menu, Apps, Install this site as an app).
 
 ## Jalur B: APK Android (pengingat jalan saat aplikasi tertutup)
-1. Di repositori yang sama buka tab **Actions**, pilih **Build Laura APK**, lalu Run workflow (juga berjalan otomatis setiap ada perubahan).
-2. Tunggu sekitar 5 sampai 10 menit sampai tanda centang hijau. Buka run tersebut, bagian Artifacts, unduh **Laura-APK**.
-3. Ekstrak zip, kirim `app-debug.apk` ke HP, buka, dan izinkan "instal dari sumber tidak dikenal".
-4. Saat pertama dibuka, izinkan **Notifikasi** dan **Alarm dan pengingat**. Lalu di Pengaturan HP, Aplikasi, Laura, Baterai, pilih **Tanpa pembatasan**.
+Actions, Build Laura APK, Run workflow, unduh **Laura-APK**, ekstrak, pasang `app-debug.apk`. Izinkan Notifikasi dan Alarm dan pengingat, lalu atur baterai ke **Tanpa pembatasan**.
 
-## Cara kerja pengingat
-- **APK:** pengingat salat dan jadwal dijadwalkan ke sistem Android untuk 7 hari ke depan. Jadwal diperbarui setiap Laura dibuka atau data berubah, jadi buka Laura minimal seminggu sekali. Saat aplikasi tertutup yang muncul adalah notifikasi bersuara. Suara Laura sendiri hanya terdengar saat aplikasi terbuka.
-- **PWA:** pengingat hanya berjalan saat aplikasi terbuka. PWA tidak bisa menjadwalkan alarm saat tertutup.
-- Waktu salat dihitung perkiraan untuk Jakarta (parameter Kemenag RI). Cocokkan dengan jadwal resmi atau masjid terdekat.
+## Pengingat
+- APK: dijadwalkan ke sistem Android untuk 7 hari ke depan dan diperbarui tiap Laura dibuka. Saat tertutup muncul notifikasi bersuara. Suara Laura hanya terdengar saat aplikasi terbuka.
+- PWA: hanya saat aplikasi terbuka.
+- Waktu salat adalah perkiraan untuk Jakarta. Cocokkan dengan jadwal resmi.
 
-## Pengaturan di panel Laura (Pengaturan suara)
-- **API key Anthropic:** diperlukan agar chat AI Laura aktif di aplikasi mandiri. Berbayar per pemakaian. Tersimpan hanya di perangkat Anda. Jika kosong, jadwal, pengingat, dan salat tetap berfungsi.
-- **Link agen D-ID:** tempel link share agen Anda untuk tombol Laura Video.
-- **Jangan menaruh API key atau link D-ID di file repositori public.** Isi hanya lewat Pengaturan di perangkat.
-
-## Batasan
-- APK ini berstatus debug (untuk dipasang sendiri, bukan untuk Play Store).
-- Ikon dibuat dari foto beresolusi rendah, sehingga agak lembut. Ganti `assets/icon-only.png` dengan foto yang lebih tajam (1024 x 1024) bila ada.
-- Data tersimpan per perangkat dan tidak otomatis sinkron antara HP dan laptop.
+## Keamanan
+Jangan menaruh API key atau link D-ID di file repositori public. Isi hanya lewat Pengaturan di perangkat.
